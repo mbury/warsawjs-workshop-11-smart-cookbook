@@ -1,12 +1,15 @@
 import React from 'react';
-import { Input, Header } from 'semantic-ui-react';
-import IngredientsList from '../containers/IngredientsList';
+import { Header } from 'semantic-ui-react';
+
+import SelectedIngredients from '../containers/SelectedIngredients';
+import SearchIngredients from '../containers/SearchIngredients';
+
 const Home = props => {
   return (
     <div>
       <Header as="h3">Posiadane składniki: </Header>
-      <Input icon="search" placeholder="Szukaj..." fluid />
-      <IngredientsList />
+      <SearchIngredients />
+      <SelectedIngredients />
     </div>
   );
 };

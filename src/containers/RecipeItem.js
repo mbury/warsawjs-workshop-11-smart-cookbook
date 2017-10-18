@@ -2,7 +2,9 @@ import React from 'react';
 import { Item, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import IngredientsItem from './IngredientsItem';
+
+import IngredientsList from '../components/IngredientsList';
+import IngredientsSummary from '../containers/IngredientsSummary';
 
 const RecipeItem = ({ recipe, addIngredient, selected }) => {
   return (
@@ -11,7 +13,7 @@ const RecipeItem = ({ recipe, addIngredient, selected }) => {
       <Item.Content verticalAlign="middle">
         <Item.Header as="a">{recipe.title}</Item.Header>
         <Item.Meta>
-          <span className="cinema">0 pasujących składników</span>
+          <IngredientsSummary id={recipe.id} ingredients={recipe.ingredients} />
         </Item.Meta>
         <Item.Description>
           Nam odio orci, hendrerit a arcu at, cursus condimentum quam. Duis
@@ -19,9 +21,7 @@ const RecipeItem = ({ recipe, addIngredient, selected }) => {
           accumsan. In sed lorem et erat congue ultricies laoreet non arcu.
         </Item.Description>
         <Item.Extra>
-          {recipe.ingredients.map(ingredient => (
-            <IngredientsItem name={ingredient} key={ingredient} />
-          ))}
+          <IngredientsList ingredients={recipe.ingredients} />
         </Item.Extra>
         <Item.Extra>
           {!selected && (

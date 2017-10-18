@@ -1,8 +1,22 @@
 import { combineReducers } from 'redux';
 import { uniq } from 'lodash';
+import { reducers as entities } from './middlewares/entities';
 
 const recipes = (state = [], action) => {
   switch (action.type) {
+    case 'FETCH_RECIPES_SUCCESS':
+      return [...action.payload.data];
+    default:
+      return state;
+  }
+};
+
+const isAppLoading = (state = false, action) => {
+  switch (action.type) {
+    case 'APP_INIT':
+      return true;
+    case 'FETCH_RECIPES_SUCCESS':
+      return false;
     default:
       return state;
   }
@@ -32,13 +46,6 @@ const shops = (state = [], action) => {
   }
 };
 
-const entities = (state = {}, action) => {
-  switch (action.type) {
-    default:
-      return state;
-  }
-};
-
 const price = (state = {}, action) => {
   switch (action.type) {
     case 'GET_BASKET_PRICE':
@@ -59,4 +66,5 @@ export default combineReducers({
   shops,
   price,
   entities,
+  isAppLoading,
 });

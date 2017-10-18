@@ -1,12 +1,16 @@
 import React from 'react';
 import { Icon, Header, Table, Button, List } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { xor, reduce } from 'lodash';
+import { reduce } from 'lodash';
 
 class IngredientsPrice extends React.Component {
   componentDidMount() {
     const { getBasketPrice, recipeIngredients } = this.props;
     getBasketPrice(recipeIngredients);
+  }
+  componentWillUnmount() {
+    const { closeBasket } = this.props;
+    closeBasket();
   }
   getShopPrice(id) {
     const { price, missingIngredients } = this.props;
@@ -98,12 +102,15 @@ const getRecipeIngredients = (state, ownProps) => {
   return state.entities.recipes[Number(ownProps.id)].ingredients;
 };
 
+const getMissingIngredients = (state, ownProps) => {
+  return getRecipeIngredients(state, ownProps).filter(item => {
+    return !state.ingredients.includes(item);
+  });
+};
+
 const mapStateToProps = (state, ownProps) => ({
   recipeIngredients: getRecipeIngredients(state, ownProps),
-  missingIngredients: xor(
-    getRecipeIngredients(state, ownProps),
-    state.ingredients
-  ),
+  missingIngredients: getMissingIngredients(state, ownProps),
   shops: state.shops,
   price: state.price,
 });
@@ -111,6 +118,9 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   getBasketPrice: ingredients => {
     dispatch({ type: 'GET_BASKET_PRICE', payload: ingredients });
+  },
+  closeBasket: ingredients => {
+    dispatch({ type: 'CLOSE_BASKET' });
   },
 });
 

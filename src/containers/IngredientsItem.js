@@ -1,17 +1,17 @@
 import React from 'react';
-import { Label } from 'semantic-ui-react';
+import { Label, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-const IngredientsItem = ({ name, isSelected, addIngredient, price }) => {
+const IngredientsItem = ({ name, isSelected, selectIngredient }) => {
   return (
     <Label
       color={isSelected ? 'green' : undefined}
-      onClick={() => addIngredient(name)}
+      onClick={() => selectIngredient(name)}
       basic
       as="a"
     >
+      {isSelected && <Icon name="checkmark" />}
       {name}
-      {price && <Label.Detail>{price} zł</Label.Detail>}
     </Label>
   );
 };
@@ -21,7 +21,7 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  addIngredient: name => {
+  selectIngredient: name => {
     dispatch({ type: 'SELECT_INGREDIENT', payload: name });
   },
 });

@@ -6,32 +6,6 @@ import registerServiceWorker from './registerServiceWorker';
 import configureStore from './store';
 
 const initialState = {
-  entities: {
-    recipes: {
-      1: {
-        id: 1,
-        title: 'Młody jaś w pikantnym sosie pomidorowym',
-        ingredients: ['pomidor', 'cebula', 'fasola jaś'],
-      },
-      2: {
-        id: 2,
-        title: 'Placki owsiane z jabłkami i gruszkami',
-        ingredients: ['płatki owsiane', 'jabłko', 'gruszka'],
-      },
-      3: {
-        id: 3,
-        title: 'Cytrynowe ciasteczka',
-        ingredients: ['mąka ryżowa', 'cytryna', 'jajka'],
-      },
-
-      4: {
-        id: 4,
-        title: 'Dynioburgery ',
-        ingredients: ['pomidor', 'papryczka chili', 'sałata', 'ser żółty'],
-      },
-    },
-  },
-  recipes: [1, 2, 3, 4],
   shops: [
     {
       id: 1,
@@ -46,10 +20,10 @@ const initialState = {
       name: 'Dżabka',
     },
   ],
-  ingredients: [],
 };
 
 const store = configureStore(initialState);
+store.dispatch({ type: 'APP_INIT' });
 
 ReactDOM.render(<App store={store} />, document.getElementById('root'));
 registerServiceWorker();
