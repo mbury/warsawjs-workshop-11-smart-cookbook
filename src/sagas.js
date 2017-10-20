@@ -1,40 +1,21 @@
 import { take, put, select, fork, cancel, all } from 'redux-saga/effects';
 import { random } from 'lodash';
+import { CALL_API } from 'redux-api-middleware';
 
 const getShops = state => state.shops;
 
-const recipes = [
-  {
-    id: 1,
-    title: 'Młody jaś w pikantnym sosie pomidorowym',
-    ingredients: ['pomidor', 'cebula', 'fasola jaś'],
-  },
-  {
-    id: 2,
-    title: 'Placki owsiane z jabłkami i gruszkami',
-    ingredients: ['płatki owsiane', 'jabłko', 'gruszka'],
-  },
-  {
-    id: 3,
-    title: 'Cytrynowe ciasteczka',
-    ingredients: ['mąka ryżowa', 'cytryna', 'jajka'],
-  },
-  {
-    id: 4,
-    title: 'Dynioburgery',
-    ingredients: ['pomidor', 'papryczka chili', 'sałata', 'ser żółty'],
-  },
-  {
-    id: 5,
-    title: 'Risotto z chorizo, oliwkami i suszonymi pomidorami',
-    ingredients: [
-      'kiełbasa chorizo',
-      'suszone pomidoryw',
-      'cebula',
-      'ser parmezan',
+const getRecipesList = () => ({
+  [CALL_API]: {
+    endpoint: '/api/recipes',
+    method: 'GET',
+    types: [
+      'FETCH_RECIPES_REQUEST',
+      'FETCH_RECIPES_SUCCESS',
+      'FETCH_RECIPES_FAILURE',
     ],
   },
-];
+});
+
 const getIngredients = ingredients =>
   ingredients.reduce((acc, item) => {
     const price = random(1, 42);
@@ -54,10 +35,7 @@ function* recipesFetch() {
     yield take(['APP_INIT', 'RECIPES_REFRESH']);
     const t = 1000 + random(100, 1500);
     yield delay(t);
-    yield put({
-      type: 'FETCH_RECIPES_SUCCESS',
-      payload: { data: recipes },
-    });
+    yield put(getRecipesList());
   }
 }
 

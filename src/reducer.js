@@ -5,7 +5,7 @@ import { reducers as entities } from './middlewares/entities';
 const recipes = (state = [], action) => {
   switch (action.type) {
     case 'FETCH_RECIPES_SUCCESS':
-      return [...action.payload.data];
+      return [...action.payload];
     default:
       return state;
   }

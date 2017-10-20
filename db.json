@@ -1,0 +1,83 @@
+{
+  "recipes": [
+    {
+      "id": 1,
+      "title": "Młody jaś w pikantnym sosie pomidorowym",
+      "ingredients": [
+        "pomidor",
+        "cebula",
+        "fasola jaś",
+        "czosnek",
+        "kiełbasa chorizo",
+        "papryka",
+        "papryczka chili"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Placki owsiane z jabłkami i gruszkami",
+      "ingredients": [
+        "płatki owsiane",
+        "jabłko",
+        "gruszka",
+        "mleko",
+        "jajko",
+        "mąka orkiszowa"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Cytrynowe ciasteczka",
+      "ingredients": ["mąka ryżowa", "cytryna", "jajka", "masło", "cukier"]
+    },
+    {
+      "id": 4,
+      "title": "Dynioburgery",
+      "ingredients": [
+        "pomidor",
+        "papryczka chili",
+        "sałata",
+        "ser żółty",
+        "soczewica",
+        "dynia"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Risotto z chorizo, oliwkami i suszonymi pomidorami",
+      "ingredients": [
+        "ryż",
+        "kiełbasa chorizo",
+        "suszone pomidory",
+        "cebula",
+        "ser parmezan",
+        "oliwki"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Muffinki owsiane z borówkami",
+      "ingredients": [
+        "borówka",
+        "płatki owsiane",
+        "jajko",
+        "banany",
+        "mleko",
+        "mąka orkiszowa"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Makaron z kurkami i trzema serami",
+      "ingredients": [
+        "kurkami",
+        "czosnek",
+        "ser mascarpone",
+        "makaron",
+        "masło",
+        "ser parmezan",
+        "ser kozi"
+      ]
+    }
+  ]
+}

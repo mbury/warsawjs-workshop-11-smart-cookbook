@@ -4,10 +4,11 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducer';
 import rootSaga from './sagas';
 
+import { apiMiddleware } from 'redux-api-middleware';
 import { middleware as entitiesMiddleware } from './middlewares/entities';
 
 const sagaMiddleware = createSagaMiddleware();
-const middlewares = [entitiesMiddleware, sagaMiddleware];
+const middlewares = [apiMiddleware, entitiesMiddleware, sagaMiddleware];
 
 if (process.env.NODE_ENV === 'development') {
   const logger = createLogger();
