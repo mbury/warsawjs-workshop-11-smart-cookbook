@@ -1,0 +1,16 @@
+version: '2'
+services:
+  frontend:
+    image: valian/docker-node-autoinstaller
+    command: npm start
+    network_mode: host
+    volumes:
+      - .:/srv
+    ports:
+      - 3000:3000
+
+  api:
+    extends: frontend
+    command: npm run api
+    ports:
+      - 3001:3001
