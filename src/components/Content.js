@@ -1,6 +1,6 @@
 import React from 'react';
 import RecipeList from '../containers/RecipeList';
-import Basket from '../components/Basket';
+import Basket from '../containers/Basket';
 import { Route } from 'react-router-dom';
 
 const Content = props => {

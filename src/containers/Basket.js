@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Message, Icon } from 'semantic-ui-react';
 
-import IngredientsPrice from '../containers/IngredientsPrice';
-import SelectedRecipe from './SelectedRecipe';
+import IngredientsPrice from './IngredientsPrice';
+import SelectedRecipe from '../components/SelectedRecipe';
 
 const IngredientsList = ({ match, isAppLoading }) => {
   return !isAppLoading ? (
