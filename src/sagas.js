@@ -1,8 +1,8 @@
 import { take, put, select, fork, cancel, all } from 'redux-saga/effects';
 import { random } from 'lodash';
+import { randomDelay } from './utils';
+import { getShops } from './selectors'
 import { CALL_API } from 'redux-api-middleware';
-
-const getShops = state => state.shops;
 
 const getRecipesList = () => ({
   [CALL_API]: {
@@ -33,8 +33,7 @@ export default function* rootSaga() {
 function* recipesFetch() {
   while (true) {
     yield take(['APP_INIT', 'RECIPES_REFRESH']);
-    const t = 1000 + random(100, 1500);
-    yield delay(t);
+    yield randomDelay(1000, 2500);
     yield put(getRecipesList());
   }
 }
@@ -62,14 +61,10 @@ function* checkPrice(ingredients) {
 }
 
 function* checkShop(shopId, ingredients) {
-  const t = 1000 + random(100, 2500);
-  yield delay(t);
+  yield randomDelay(1000, 2500);
   yield put({
     type: 'RECEIVE_SHOP_PRICE',
     payload: { [shopId]: getIngredients(ingredients) },
   });
 }
 
-function delay(ms) {
-  return new Promise(resolve => setTimeout(() => resolve(true), ms));
-}

@@ -1,14 +1,26 @@
 import { combineReducers } from 'redux';
-import { uniq } from 'lodash';
-import { reducers as entities } from './middlewares/entities';
+import uniq from 'lodash/uniq';
+import mergeWith from 'lodash/mergeWith';
 
-const recipes = (state = [], action) => {
+const recipesOrder = (state = [], action) => {
   switch (action.type) {
     case 'FETCH_RECIPES_SUCCESS':
       return [...action.payload];
     default:
       return state;
   }
+};
+
+const entities = (state = {}, action) => {
+  if (action.entities) {
+    return mergeWith({}, state, action.entities, (objValue, srcValue) => {
+      if (Array.isArray(srcValue)) {
+        return srcValue;
+      }
+      return undefined;
+    });
+  }
+  return state;
 };
 
 const isAppLoading = (state = false, action) => {
@@ -61,7 +73,7 @@ const price = (state = {}, action) => {
 };
 
 export default combineReducers({
-  recipes,
+  recipesOrder,
   ingredients,
   shops,
   price,

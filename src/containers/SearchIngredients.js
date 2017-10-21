@@ -2,7 +2,7 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-import { getAllIngredients } from '../selectors';
+import { getNotSelectedIngredients } from '../selectors';
 
 const SearchIngredients = ({ addIngredient, options }) => {
   return (
@@ -26,7 +26,7 @@ const SearchIngredients = ({ addIngredient, options }) => {
 
 const mapStateToProps = (state, ownProps) => ({
   ingredients: state.ingredients,
-  options: getAllIngredients(state).map(item => {
+  options: getNotSelectedIngredients(state).map(item => {
     return { key: item, value: item, text: item };
   }),
 });

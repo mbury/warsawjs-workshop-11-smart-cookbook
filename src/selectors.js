@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
 import { intersection, flatten, uniq, flow, sortBy } from 'lodash';
 
+export const getShops = state => state.shops;
 export const getIngredients = state => state.ingredients;
-export const getRecipesOrder = state => state.recipes;
+export const getRecipesOrder = state => state.recipesOrder;
 export const getRecipesEntities = state => state.entities.recipes;
 
 export const getRecipes = createSelector(
@@ -47,21 +48,19 @@ export const getFilteredRecipes = createSelector(
 );
 
 export const getAllIngredients = createSelector(
-  getIngredients,
   getRecipes,
-  (ingredients, recipes) => {
-    return flow([
-      data =>
-        data.map(item => {
-          return item.ingredients;
-        }),
-      flatten,
-      uniq,
-      data =>
-        data.filter(item => {
-          return !ingredients.includes(item);
-        }),
-      sortBy,
-    ])(recipes);
-  }
+  flow([
+    data => data.map(item => item.ingredients),
+    flatten,
+    uniq,
+    sortBy,
+  ])
 );
+
+export const getNotSelectedIngredients = createSelector(
+  getIngredients,
+  getAllIngredients,
+  (selectedIngredients, allIngredients) =>
+    allIngredients.filter(item =>
+      !selectedIngredients.includes(item))
+)

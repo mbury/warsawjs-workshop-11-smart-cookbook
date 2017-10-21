@@ -5,7 +5,7 @@ import rootReducer from './reducer';
 import rootSaga from './sagas';
 
 import { apiMiddleware } from 'redux-api-middleware';
-import { middleware as entitiesMiddleware } from './middlewares/entities';
+import { entitiesMiddleware } from './middlewares';
 
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [apiMiddleware, entitiesMiddleware, sagaMiddleware];
