@@ -2,6 +2,16 @@
 
  To repozytorium zawiera kod przygotowany na warsztaty #11 WarsawJS - Zaawansowany React.js
 
+# Usage
+
+    npm install    # only first time
+    npm start
+
+    # in separate terminal
+    npm run api
+
+    # now application should be available at localhost:3000
+
 # Plan
 
 **Skonfigurowanie projektu**:
