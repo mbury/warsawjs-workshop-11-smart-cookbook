@@ -1,14 +1,11 @@
-import React from 'react';
-import find from 'lodash/find'
-import { Item, Label } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getRecipes } from '../selectors'
+import React from "react";
+import {Item, Label} from "semantic-ui-react";
+import {Link} from "react-router-dom";
 
-import IngredientsList from '../components/IngredientsList';
-import IngredientsSummary from '../containers/IngredientsSummary';
+import IngredientsList from "../components/IngredientsList";
+import IngredientsSummary from "../containers/IngredientsSummary";
 
-const RecipeItem = ({ recipe, selected }) => {
+export default ({ recipe, selected }) => {
   return (
     <Item>
       <Item.Image src="http://via.placeholder.com/175x175" />
@@ -41,18 +38,3 @@ const RecipeItem = ({ recipe, selected }) => {
     </Item>
   );
 };
-
-RecipeItem.defaultProps = {
-  recipe: {},
-};
-
-const mapStateToProps = (state, ownProps) => ({
-  recipe: getRecipe(state, ownProps),
-});
-
-const getRecipe = (state, ownProps) => {
-  const recipes = getRecipes(state)
-  return find(recipes, recipe => recipe.id === parseInt(ownProps.id, 10));
-};
-
-export default connect(mapStateToProps)(RecipeItem);

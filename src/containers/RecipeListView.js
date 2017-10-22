@@ -1,17 +1,9 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { getFilteredRecipes, isRecipesLoading } from '../selectors';
-import RecipeItem from './RecipeItem';
-import Counter from './Counter';
-import withLoadingInfo from './LoadingInfo'
-import {
-  Item,
-  Header,
-  Segment,
-  Button,
-} from 'semantic-ui-react';
+import React from "react";
+import RecipeItem from "./RecipeItem";
+import Counter from "./Counter";
+import {Button, Header, Item, Segment} from "semantic-ui-react";
 
-const RecipeList = ({ recipes, recipeRefresh }) =>
+export default ({ recipes = [], recipeRefresh }) =>
   <Counter>
     {(counter, plus, minus) => {
       return (
@@ -36,21 +28,3 @@ const RecipeList = ({ recipes, recipeRefresh }) =>
       );
     }}
   </Counter>
-
-RecipeList.defaultProps = {
-  recipes: [],
-};
-
-const mapStateToProps = (state, ownProps) => ({
-  recipes: getFilteredRecipes(state),
-  isLoading: isRecipesLoading(state),
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  recipeRefresh: () => dispatch({ type: 'RECIPES_REFRESH' }),
-});
-
-const loadingMessage = 'Za chwilę zostanie wyświetlona lista dostępnych przepisów.'
-export default connect(mapStateToProps, mapDispatchToProps)(
-  withLoadingInfo({loadingMessage, selector: props => props.isLoading})(RecipeList)
-);

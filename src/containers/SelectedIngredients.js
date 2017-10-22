@@ -1,9 +1,7 @@
-import React from 'react';
-import { List, Icon } from 'semantic-ui-react';
-import { connect } from 'react-redux';
-import { getSelectedIngredients } from '../selectors'
+import React from "react";
+import {Icon, List} from "semantic-ui-react";
 
-const IngredientsList = ({ ingredients, onDelete }) => {
+export default ({ ingredients = [], onDelete }) => {
   return (
     <List animated verticalAlign="middle" divided relaxed={'very'}>
       {ingredients.map(item => (
@@ -17,17 +15,3 @@ const IngredientsList = ({ ingredients, onDelete }) => {
     </List>
   );
 };
-
-IngredientsList.defaultProps = {
-  ingredients: [],
-};
-
-const mapStateToProps = (state, ownProps) => ({
-  ingredients: getSelectedIngredients(state),
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onDelete: name => dispatch({ type: 'DELETE_INGREDIENT', payload: name }),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(IngredientsList);

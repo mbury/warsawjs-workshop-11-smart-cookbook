@@ -1,10 +1,7 @@
-import React from 'react';
-import { Dropdown } from 'semantic-ui-react';
-import { connect } from 'react-redux';
+import React from "react";
+import {Dropdown} from "semantic-ui-react";
 
-import { getNotSelectedIngredients } from '../selectors';
-
-const SearchIngredients = ({ addIngredient, options }) => {
+export default ({ addIngredient, options = [] }) => {
   return (
     <div>
       <Dropdown
@@ -23,15 +20,3 @@ const SearchIngredients = ({ addIngredient, options }) => {
     </div>
   );
 };
-
-const mapStateToProps = (state, ownProps) => ({
-  options: getNotSelectedIngredients(state).map(item => {
-    return { key: item, value: item, text: item };
-  }),
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  addIngredient: name => dispatch({ type: 'ADD_INGREDIENT', payload: name })
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchIngredients);
