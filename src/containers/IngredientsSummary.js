@@ -17,4 +17,5 @@ const mapStateToProps = (state, ownProps) => {
     matchIngredients: matchIngredients[ownProps.id] || 0,
   };
 };
+
 export default connect(mapStateToProps)(IngredientsSummary);

@@ -2,39 +2,43 @@ import { combineReducers } from 'redux';
 import uniq from 'lodash/uniq';
 import mergeWith from 'lodash/mergeWith';
 
-const recipesOrder = (state = [], action) => {
+const mergeEntities = (oldEntities, newEntities) =>
+  mergeWith({}, oldEntities, newEntities, (objValue, srcValue) => {
+    if (Array.isArray(srcValue)) {
+      return srcValue;
+    }
+    return undefined;
+  });
+
+const recipes = (state = {order: [], entities: {}, loading: false}, action) => {
   switch (action.type) {
+    case 'RECIPES_REFRESH':
+      return {...state, loading: true}
+    case 'FETCH_RECIPES_FAILURE':
+      return {...state, loading: false}
     case 'FETCH_RECIPES_SUCCESS':
-      return [...action.payload];
+      return {
+        order: [...action.payload],
+        entities: mergeEntities(state.entities, action.entities.recipes),
+        loading: false
+      }
     default:
       return state;
   }
-};
-
-const entities = (state = {}, action) => {
-  if (action.entities) {
-    return mergeWith({}, state, action.entities, (objValue, srcValue) => {
-      if (Array.isArray(srcValue)) {
-        return srcValue;
-      }
-      return undefined;
-    });
-  }
-  return state;
 };
 
 const isAppLoading = (state = false, action) => {
   switch (action.type) {
     case 'APP_INIT':
       return true;
-    case 'FETCH_RECIPES_SUCCESS':
+    case 'APP_INIT_FINISHED':
       return false;
     default:
       return state;
   }
 };
 
-const ingredients = (state = [], action) => {
+const selectedIngredients = (state = [], action) => {
   switch (action.type) {
     case 'DELETE_INGREDIENT':
       return state.filter(item => item !== action.payload);
@@ -43,8 +47,9 @@ const ingredients = (state = [], action) => {
     case 'SELECT_INGREDIENT': {
       if (state.includes(action.payload)) {
         return state.filter(item => item !== action.payload);
+      } else {
+        return uniq([...state, action.payload]);
       }
-      return uniq([...state, action.payload]);
     }
     default:
       return state;
@@ -58,7 +63,7 @@ const shops = (state = [], action) => {
   }
 };
 
-const price = (state = {}, action) => {
+const basket = (state = {}, action) => {
   switch (action.type) {
     case 'GET_BASKET_PRICE':
       return {};
@@ -73,10 +78,9 @@ const price = (state = {}, action) => {
 };
 
 export default combineReducers({
-  recipesOrder,
-  ingredients,
+  recipes,
   shops,
-  price,
-  entities,
+  basket,
+  selectedIngredients,
   isAppLoading,
 });

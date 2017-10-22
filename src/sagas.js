@@ -1,4 +1,4 @@
-import { take, put, select, fork, cancel, all } from 'redux-saga/effects';
+import { take, put, select, fork, cancel, takeLatest, all } from 'redux-saga/effects';
 import { random } from 'lodash';
 import { randomDelay } from './utils';
 import { getShops } from './selectors'
@@ -22,27 +22,21 @@ const getIngredients = ingredients =>
     return { ...acc, [item]: price };
   }, {});
 
-export default function* rootSaga() {
-  yield fork(recipesFetch);
-  while (true) {
-    const action = yield take('GET_BASKET_PRICE');
-    yield fork(checkPrice, action.payload);
-  }
+function* initApp() {
+  yield take('APP_INIT')
+  yield recipesFetch()
+  yield put({type: 'APP_INIT_FINISHED'});
 }
 
 function* recipesFetch() {
-  while (true) {
-    yield take(['APP_INIT', 'RECIPES_REFRESH']);
     yield randomDelay(1000, 2500);
     yield put(getRecipesList());
-  }
+    yield take(['FETCH_RECIPES_SUCCESS', 'FETCH_RECIPES_FAILURE'])
 }
 
 function* checkPrice(ingredients) {
   const shops = yield select(getShops);
-  const sagas = shops.map(item => {
-    return fork(checkShop, item.id, ingredients);
-  });
+  const sagas = shops.map(item => fork(checkShop, item.id, ingredients));
   const tasks = yield all(sagas);
   let finished = 0;
   while (finished < shops.length) {
@@ -68,3 +62,11 @@ function* checkShop(shopId, ingredients) {
   });
 }
 
+export default function* rootSaga() {
+  yield initApp()
+  yield takeLatest('RECIPES_REFRESH', recipesFetch);
+  while (true) {
+    const action = yield take('GET_BASKET_PRICE');
+    yield fork(checkPrice, action.payload);
+  }
+}

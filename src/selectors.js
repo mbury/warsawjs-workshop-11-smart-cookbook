@@ -2,22 +2,21 @@ import { createSelector } from 'reselect';
 import { intersection, flatten, uniq, flow, sortBy } from 'lodash';
 
 export const getShops = state => state.shops;
-export const getIngredients = state => state.ingredients;
-export const getRecipesOrder = state => state.recipesOrder;
-export const getRecipesEntities = state => state.entities.recipes;
+export const getSelectedIngredients = state => state.selectedIngredients;
+export const getRecipesOrder = state => state.recipes.order;
+export const getRecipesEntities = state => state.recipes.entities;
+export const getBasket = state => state.basket;
+export const isAppLoading = state => state.isAppLoading;
+export const isRecipesLoading = state => isAppLoading(state) || state.recipes.loading
 
 export const getRecipes = createSelector(
   getRecipesOrder,
   getRecipesEntities,
-  (order, entities) => {
-    return order.map(id => {
-      return entities[id];
-    });
-  }
+  (order, entities) => order.map(id => entities[id])
 );
 
 export const getMatchIngredients = createSelector(
-  getIngredients,
+  getSelectedIngredients,
   getRecipes,
   (ingredients, recipes) => {
     return recipes.reduce((acc, recipe) => {
@@ -30,7 +29,7 @@ export const getMatchIngredients = createSelector(
 );
 
 export const getFilteredRecipes = createSelector(
-  getIngredients,
+  getSelectedIngredients,
   getRecipes,
   getMatchIngredients,
   (ingredients, recipes, match) => {
@@ -58,7 +57,7 @@ export const getAllIngredients = createSelector(
 );
 
 export const getNotSelectedIngredients = createSelector(
-  getIngredients,
+  getSelectedIngredients,
   getAllIngredients,
   (selectedIngredients, allIngredients) =>
     allIngredients.filter(item =>

@@ -1,7 +1,9 @@
 import React from 'react';
+import find from 'lodash/find'
 import { Icon, Header, Table, Button, List } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { reduce } from 'lodash';
+import { getSelectedIngredients, getRecipes, getShops, getBasket } from '../selectors'
 
 class IngredientsPrice extends React.Component {
   componentDidMount() {
@@ -99,29 +101,26 @@ class IngredientsPrice extends React.Component {
 IngredientsPrice.defaultProps = {};
 
 const getRecipeIngredients = (state, ownProps) => {
-  return state.entities.recipes[Number(ownProps.id)].ingredients;
+  const recipes = getRecipes(state)
+  return find(recipes, recipe => recipe.id === parseInt(ownProps.id)).ingredients;
 };
 
 const getMissingIngredients = (state, ownProps) => {
   return getRecipeIngredients(state, ownProps).filter(item => {
-    return !state.ingredients.includes(item);
+    return !getSelectedIngredients(state).includes(item);
   });
 };
 
 const mapStateToProps = (state, ownProps) => ({
   recipeIngredients: getRecipeIngredients(state, ownProps),
   missingIngredients: getMissingIngredients(state, ownProps),
-  shops: state.shops,
-  price: state.price,
+  shops: getShops(state),
+  price: getBasket(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  getBasketPrice: ingredients => {
-    dispatch({ type: 'GET_BASKET_PRICE', payload: ingredients });
-  },
-  closeBasket: ingredients => {
-    dispatch({ type: 'CLOSE_BASKET' });
-  },
+  getBasketPrice: ingredients => dispatch({ type: 'GET_BASKET_PRICE', payload: ingredients }),
+  closeBasket: ingredients => dispatch({ type: 'CLOSE_BASKET' }),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IngredientsPrice);
