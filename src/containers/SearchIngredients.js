@@ -2,7 +2,7 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
-import { getNotSelectedIngredients, getSelectedIngredients } from '../selectors';
+import { getNotSelectedIngredients } from '../selectors';
 
 const SearchIngredients = ({ addIngredient, options }) => {
   return (

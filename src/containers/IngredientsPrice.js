@@ -102,7 +102,7 @@ IngredientsPrice.defaultProps = {};
 
 const getRecipeIngredients = (state, ownProps) => {
   const recipes = getRecipes(state)
-  return find(recipes, recipe => recipe.id === parseInt(ownProps.id)).ingredients;
+  return find(recipes, recipe => recipe.id === parseInt(ownProps.id, 10)).ingredients;
 };
 
 const getMissingIngredients = (state, ownProps) => {

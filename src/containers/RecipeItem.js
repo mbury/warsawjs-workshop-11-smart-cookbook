@@ -52,7 +52,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const getRecipe = (state, ownProps) => {
   const recipes = getRecipes(state)
-  return find(recipes, recipe => recipe.id === parseInt(ownProps.id));
+  return find(recipes, recipe => recipe.id === parseInt(ownProps.id, 10));
 };
 
 export default connect(mapStateToProps)(RecipeItem);
