@@ -4,7 +4,10 @@ import {
   Message,
 } from 'semantic-ui-react';
 
-export default ({message, selector}) => WrappedComponent => props => {
+const message = "Loading";
+const selector = () => false;
+
+export default props => {
   const isLoading = selector(props);
   return isLoading ? (
     <Message icon>
@@ -15,6 +18,6 @@ export default ({message, selector}) => WrappedComponent => props => {
       </Message.Content>
     </Message>
   ) : (
-    <WrappedComponent {...props} />
+    <div></div> // Here should be
   );
 }
