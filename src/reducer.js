@@ -1,14 +1,6 @@
 import { combineReducers } from 'redux';
+import { mergeEntities } from './utils'
 import uniq from 'lodash/uniq';
-import mergeWith from 'lodash/mergeWith';
-
-const mergeEntities = (oldEntities, newEntities) =>
-  mergeWith({}, oldEntities, newEntities, (objValue, srcValue) => {
-    if (Array.isArray(srcValue)) {
-      return srcValue;
-    }
-    return undefined;
-  });
 
 const recipes = (state = {order: [], entities: {}, loading: false}, action) => {
   switch (action.type) {
